@@ -19,6 +19,7 @@
     "@babel/preset-typescript": "^7.16.5",
     "assert": "^2.0.0",
     "css-loader": "^6.5.1",
+    "markdown-it": "^12.3.2",
     "null-loader": "^4.0.1",
     "prop-types": "15.8.0",
     "style-loader": "^3.3.1",
