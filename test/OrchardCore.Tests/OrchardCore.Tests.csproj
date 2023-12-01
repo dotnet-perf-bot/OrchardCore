@@ -5,6 +5,7 @@
   <PropertyGroup>
     <TargetFrameworks>$(CommonTargetFrameworks)</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsNotAsErrors>ASP0019,ASP0023</WarningsNotAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
