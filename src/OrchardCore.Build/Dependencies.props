@@ -37,9 +37,11 @@
     <PackageManagement Include="MailKit" Version="4.3.0" />
     <PackageManagement Include="Markdig" Version="0.34.0" />
     <PackageManagement Include="MessagePack" Version="2.2.60" />
+    <PackageManagement Include="Microsoft.Data.SqlClient" Version="5.1.4" />
     <PackageManagement Include="Microsoft.Extensions.Azure" Version="1.7.1" />
     <PackageManagement Include="Microsoft.Extensions.Http.Resilience" Version="8.1.0" />
     <PackageManagement Include="Microsoft.Identity.Web" Version="2.16.1" />
+    <PackageManagement Include="Microsoft.IdentityModel.JsonWebTokens" Version="6.34.0" />
     <PackageManagement Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageManagement Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
     <PackageManagement Include="MimeKit" Version="4.3.0" />
@@ -60,6 +62,7 @@
     <PackageManagement Include="SixLabors.ImageSharp.Web" Version="3.1.0" />
     <PackageManagement Include="StackExchange.Redis" Version="2.7.17" />
     <PackageManagement Include="StyleCop.Analyzers" Version="1.1.118" />
+    <PackageManagement Include="System.IdentityModel.Tokens.Jwt" Version="6.34.0" />
     <PackageManagement Include="System.Linq.Async" Version="6.0.1" />
     <PackageManagement Include="xunit" Version="2.6.6" />
     <PackageManagement Include="xunit.analyzers" Version="1.10.0" />
