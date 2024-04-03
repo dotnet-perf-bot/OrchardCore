@@ -116,7 +116,7 @@ namespace OrchardCore.Menu.Controllers
             else
             {
                 // Look for the target menu item in the hierarchy.
-                dynamic parentMenuItem = FindMenuItem(menu.Content, menuItemId);
+                var parentMenuItem = FindMenuItem(menu.Content, menuItemId);
 
                 // Couldn't find targeted menu item.
                 if (parentMenuItem == null)
