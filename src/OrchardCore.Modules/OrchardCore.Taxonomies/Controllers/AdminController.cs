@@ -134,7 +134,7 @@ namespace OrchardCore.Taxonomies.Controllers
             else
             {
                 // Look for the target taxonomy item in the hierarchy.
-                var parentTaxonomyItem = FindTaxonomyItem(taxonomy.As<TaxonomyPart>().Content, taxonomyItemId);
+                dynamic parentTaxonomyItem = FindTaxonomyItem(taxonomy.As<TaxonomyPart>().Content, taxonomyItemId);
 
                 // Couldn't find targeted taxonomy item.
                 if (parentTaxonomyItem == null)
