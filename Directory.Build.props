@@ -56,6 +56,18 @@
 
     <!--CA1861 : Prefer 'static readonly' fields over constant array arguments if the called method is called repeatedly and is not mutating the passed array -->
     <NoWarn>$(NoWarn);CA1861</NoWarn>
+    
+    <!-- Use concrete types when possible for improved performance -->
+    <NoWarn>$(NoWarn);CA1859</NoWarn>
+    
+    <!-- Prefer generic overload when type is known -->
+    <NoWarn>$(NoWarn);CA2263</NoWarn>
+    
+    <!-- Prefer 'Convert.ToHexString' and 'Convert.ToHexStringLower' over call chains based on 'BitConverter.ToString' -->
+    <NoWarn>$(NoWarn);CA1872</NoWarn>
+    
+    <!-- Avoid inexact read with 'System.IO.Stream.Read(byte[], int, int) -->
+    <NoWarn>$(NoWarn);CA2022</NoWarn>
 
   </PropertyGroup>
 
