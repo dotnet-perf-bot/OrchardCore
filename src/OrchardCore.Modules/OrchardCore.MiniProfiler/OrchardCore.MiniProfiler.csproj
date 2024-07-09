@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <PackageReference Include="MiniProfiler.AspNetCore.Mvc" />
+    <PackageReference Include="System.Text.RegularExpressions" />
     <PackageReference Include="YesSql.Abstractions" />
   </ItemGroup>
 

@@ -522,8 +522,9 @@ namespace OrchardCore.OpenId.Services
                     var flags = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ?
                         X509KeyStorageFlags.EphemeralKeySet :
                         X509KeyStorageFlags.MachineKeySet;
-
+                    #pragma warning disable SYSLIB0057 // Warning disabled per https://github.com/dotnet/docs/issues/41662, TODO: Update to use X509CertificateLoader.LoadPkcs12FromFile we are able to use it (will need to version block with this regardless).
                     return new X509Certificate2(path, password, flags);
+                    #pragma warning restore SYSLIB0057
                 }
                 // Some cloud platforms (e.g Azure App Service/Antares) are known to fail to import .pfx files if the
                 // private key is not persisted or marked as exportable. To ensure X.509 certificates can be correctly
@@ -533,11 +534,12 @@ namespace OrchardCore.OpenId.Services
                 {
                     _logger.LogDebug(exception, "A first-chance exception occurred while trying to extract " +
                                                 "a X.509 certificate with the default key storage options.");
-
+                    #pragma warning disable SYSLIB0057 // Warning disabled per https://github.com/dotnet/docs/issues/41662, TODO: Update to use X509CertificateLoader.LoadPkcs12FromFile we are able to use it (will need to version block with this regardless).
                     return new X509Certificate2(path, password,
                         X509KeyStorageFlags.MachineKeySet |
                         X509KeyStorageFlags.PersistKeySet |
                         X509KeyStorageFlags.Exportable);
+                    #pragma warning restore SYSLIB0057
                 }
                 // Don't swallow exceptions thrown from the catch handler to ensure unrecoverable exceptions
                 // (e.g caused by malformed X.509 certificates or invalid password) are correctly logged.
