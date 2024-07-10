@@ -68,9 +68,11 @@
     <PackageManagement Include="SixLabors.ImageSharp.Web" Version="3.1.2" />
     <PackageManagement Include="StackExchange.Redis" Version="2.7.33" />
     <PackageManagement Include="StyleCop.Analyzers" Version="1.1.118" />
+    <PackageManagement Include="System.Formats.Asn1" Version="8.0.1" />
     <PackageManagement Include="System.IdentityModel.Tokens.Jwt" Version="6.35.0" />
     <PackageManagement Include="System.IO.Hashing" Version="8.0.0" />
     <PackageManagement Include="System.Linq.Async" Version="6.0.1" />
+    <PackageManagement Include="System.Text.Json" Version="8.0.4" />
     <PackageManagement Include="System.Text.RegularExpressions" Version="4.3.1" />
     <PackageManagement Include="xunit" Version="2.7.0" />
     <PackageManagement Include="xunit.analyzers" Version="1.11.0" />
