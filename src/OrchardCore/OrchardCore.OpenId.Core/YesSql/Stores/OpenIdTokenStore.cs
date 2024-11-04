@@ -556,4 +556,83 @@ public class OpenIdTokenStore<TToken> : IOpenIdTokenStore<TToken>
                 .ToString(), exception);
         }
     }
+
+    public async ValueTask<long> RevokeAsync(string subject, string client, string status, string type, CancellationToken cancellationToken)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(subject);
+        ArgumentException.ThrowIfNullOrEmpty(client);
+        ArgumentException.ThrowIfNullOrEmpty(status);
+        ArgumentException.ThrowIfNullOrEmpty(type);
+
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var tokens = (await _session.Query<TToken, OpenIdTokenIndex>(
+            token => token.Subject == subject && token.ApplicationId == client &&
+                     token.Status == status && token.Type == type, collection: OpenIdCollection).ListAsync()).ToList();
+
+        if (tokens.Count is 0)
+        {
+            return 0;
+        }
+
+        foreach (var token in tokens)
+        {
+            token.Status = Statuses.Revoked;
+            await _session.SaveAsync(token, checkConcurrency: false, collection: OpenIdCollection);
+        }
+
+        await _session.SaveChangesAsync();
+
+        return tokens.Count;
+    }
+
+    public async ValueTask<long> RevokeByApplicationIdAsync(string identifier, CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(identifier);
+
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var tokens = (await _session.Query<TToken, OpenIdTokenIndex>(
+            token => token.ApplicationId == identifier, collection: OpenIdCollection).ListAsync()).ToList();
+
+        if (tokens.Count is 0)
+        {
+            return 0;
+        }
+
+        foreach (var token in tokens)
+        {
+            token.Status = Statuses.Revoked;
+            await _session.SaveAsync(token, checkConcurrency: false, collection: OpenIdCollection);
+        }
+
+        await _session.SaveChangesAsync();
+
+        return tokens.Count;
+    }
+
+    public async ValueTask<long> RevokeBySubjectAsync(string subject, CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(subject);
+
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var tokens = (await _session.Query<TToken, OpenIdTokenIndex>(
+            token => token.Subject == subject, collection: OpenIdCollection).ListAsync()).ToList();
+
+        if (tokens.Count is 0)
+        {
+            return 0;
+        }
+
+        foreach (var token in tokens)
+        {
+            token.Status = Statuses.Revoked;
+            await _session.SaveAsync(token, checkConcurrency: false, collection: OpenIdCollection);
+        }
+
+        await _session.SaveChangesAsync();
+
+        return tokens.Count;
+    }
 }
