@@ -108,7 +108,7 @@ public class OpenIdAuthorizationStore<TAuthorization> : IOpenIdAuthorizationStor
     /// <inheritdoc/>
     public virtual async IAsyncEnumerable<TAuthorization> FindAsync(
         string subject, string client, string status, string type,
-        ImmutableArray<string> scopes, [EnumeratorCancellation] CancellationToken cancellationToken)
+        ImmutableArray<string>? scopes, [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         await foreach (var authorization in FindAsync(subject, client, status, type, cancellationToken))
         {
@@ -338,6 +338,70 @@ public class OpenIdAuthorizationStore<TAuthorization> : IOpenIdAuthorizationStor
         }
 
         return result;
+    }
+
+    public async ValueTask<long> RevokeAsync(string subject, string client, string status, string type, CancellationToken cancellationToken)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(subject);
+        ArgumentException.ThrowIfNullOrEmpty(client);
+        ArgumentException.ThrowIfNullOrEmpty(status);
+        ArgumentException.ThrowIfNullOrEmpty(type);
+
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var authorizations = await _session.Query<TAuthorization, OpenIdAuthorizationIndex>(
+            index => index.ApplicationId == client && index.Subject == subject &&
+                     index.Status == status && index.Type == type,
+            collection: OpenIdCollection).ListAsync();
+
+        foreach (var authorization in authorizations)
+        {
+            authorization.Status = OpenIddictConstants.Statuses.Revoked;
+            await _session.SaveAsync(authorization, collection: OpenIdCollection);
+        }
+
+        await _session.SaveChangesAsync();
+        return authorizations.Count;
+    }
+
+    public async ValueTask<long> RevokeByApplicationIdAsync(string identifier, CancellationToken cancellationToken)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(identifier);
+
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var authorizations = await _session.Query<TAuthorization, OpenIdAuthorizationIndex>(
+            index => index.ApplicationId == identifier,
+            collection: OpenIdCollection).ListAsync();
+
+        foreach (var authorization in authorizations)
+        {
+            authorization.Status = OpenIddictConstants.Statuses.Revoked;
+            await _session.SaveAsync(authorization, collection: OpenIdCollection);
+        }
+
+        await _session.SaveChangesAsync();
+        return authorizations.Count;
+    }
+
+    public async ValueTask<long> RevokeBySubjectAsync(string subject, CancellationToken cancellationToken)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(subject);
+
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var authorizations = await _session.Query<TAuthorization, OpenIdAuthorizationIndex>(
+            index => index.Subject == subject,
+            collection: OpenIdCollection).ListAsync();
+
+        foreach (var authorization in authorizations)
+        {
+            authorization.Status = OpenIddictConstants.Statuses.Revoked;
+            await _session.SaveAsync(authorization, collection: OpenIdCollection);
+        }
+
+        await _session.SaveChangesAsync();
+        return authorizations.Count;
     }
 
     /// <inheritdoc/>
