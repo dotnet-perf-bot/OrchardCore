@@ -2,6 +2,7 @@
   "name": "orchardcore.themes",
   "version": "1.0.0",
   "dependencies": {
-    "bootstrap": "5.3.3"
+    "bootstrap": "5.3.3",
+    "cookie": "^0.7.0"
   }
 }
