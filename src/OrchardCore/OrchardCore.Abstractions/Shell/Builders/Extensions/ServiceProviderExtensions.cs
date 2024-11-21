@@ -21,18 +21,4 @@ public static class ServiceProviderExtensions
     {
         return (TResult)ActivatorUtilities.CreateInstance(provider, type);
     }
-
-    /// <summary>
-    /// Gets the service object of the specified type with the specified key.
-    /// </summary>
-    public static object? GetKeyedService(this IServiceProvider provider, Type serviceType, object? serviceKey)
-    {
-        ArgumentNullException.ThrowIfNull(provider);
-        if (provider is IKeyedServiceProvider keyedServiceProvider)
-        {
-            return keyedServiceProvider.GetKeyedService(serviceType, serviceKey);
-        }
-
-        throw new InvalidOperationException("This service provider doesn't support keyed services.");
-    }
 }
