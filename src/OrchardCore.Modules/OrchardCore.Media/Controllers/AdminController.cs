@@ -98,7 +98,7 @@ public sealed class AdminController : Controller
         }
 
         var allowed = _mediaFileStore.GetDirectoryContentAsync(path)
-            .WhereAwait(async e => e.IsDirectory && await _authorizationService.AuthorizeAsync(User, MediaPermissions.ManageMediaFolder, (object)e.Path));
+            .Where(async (e, t) => e.IsDirectory && await _authorizationService.AuthorizeAsync(User, MediaPermissions.ManageMediaFolder, (object)e.Path));
 
         return Ok(await allowed.Select(folder =>
         {
@@ -138,7 +138,7 @@ public sealed class AdminController : Controller
         var allowedExtensions = GetRequestedExtensions(extensions, false);
 
         var allowed = _mediaFileStore.GetDirectoryContentAsync(path)
-            .WhereAwait(async e =>
+            .Where(async (e, ct) =>
                 !e.IsDirectory
                 && (allowedExtensions.Count == 0 || allowedExtensions.Contains(Path.GetExtension(e.Path)))
                 && await _authorizationService.AuthorizeAsync(User, MediaPermissions.ManageMediaFolder, (object)e.Path))
