@@ -58,7 +58,7 @@ public sealed class MediaDeploymentStepDriver : DisplayDriver<DeploymentStep, Me
     private async Task<IList<MediaStoreEntryViewModel>> GetMediaStoreEntries(string path = null, MediaStoreEntryViewModel parent = null)
     {
         var mediaStoreEntries = await _mediaFileStore.GetDirectoryContentAsync(path)
-            .SelectAwait(async e =>
+            .Select(async (FileStorage.IFileStoreEntry e, CancellationToken token) =>
             {
                 var mediaStoreEntry = new MediaStoreEntryViewModel
                 {
