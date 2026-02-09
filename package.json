@@ -23,6 +23,10 @@
     "src/OrchardCore.Modules/*/Assets/**",
     "src/OrchardCore.Themes/*/Assets/**"
   ],
+  "resolutions": {
+    "tar": "^7.5.3",
+    "glob": "^11.1.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.22.11",
     "@babel/preset-env": "^7.22.10",
@@ -36,7 +40,7 @@
     "es6-promise": "4.2.8",
     "eslint": "^9.21.0",
     "eslint-plugin-vue": "^9.32.0",
-    "glob": "^11.0.1",
+    "glob": "^11.1.0",
     "globals": "^15.15.0",
     "graceful-fs": "4.2.11",
     "gulp": "^4.0.2",
